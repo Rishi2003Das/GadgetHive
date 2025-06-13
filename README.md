@@ -56,14 +56,12 @@ FlaskMarket/
 ## Getting Started
 
 - Clone the repo:
-  '''
-  git clone https://github.com/your-username/GadgetHive.git
-  cd GadgetHive
-  '''
+  <pre> ```git clone https://github.com/your-username/GadgetHive.git
+  cd GadgetHive``` </pre>
 - Set up a virtual environment (optional but recommended):
-  python -m venv venv
-  source venv/bin/activate   # On Windows: venv\Scripts\activate
+  <pre> ```python -m venv venv
+    source venv/bin/activate   # On Windows: venv\Scripts\activate``` </pre>
 - Install dependencies:
-  pip install -r requirements.txt
+  <pre> ```pip install -r requirements.txt``` </pre>
 -  Run the application:
-  python run.py
+    <pre> ```python run.py``` </pre>
