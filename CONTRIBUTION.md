@@ -67,6 +67,8 @@ Open an Issue for bugs or feature requests
 
 Ask questions in the issue comments or start a discussion
 
+**Refer to the Demo_Video.mp4 file for understanding the flow of the application**
+
 ## My Contacts
 
 [LinkedIn](https://www.linkedin.com/in/rishi2003das/)
