@@ -1,0 +1,49 @@
+<html>
+<head>
+  <title>Passwordless register</title>
+
+  <script type="module">
+    import {
+        create,
+        parseCreationOptionsFromJSON,
+    } from '/webauthn-json.browser-ponyfill.js';
+
+    async function start() {
+      let request = await fetch('/api/register/begin', {
+        method: 'POST',
+      });
+      let json = await request.json();
+      let options = parseCreationOptionsFromJSON(json);
+      let response=null;
+      try{
+        response = await create(options);
+      }
+      catch(e)
+      {
+        alert('ERROR Creating key!');
+        window.location = '/market';
+      }
+      
+      let result = await fetch('/api/register/complete', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+	body: JSON.stringify(response),
+      });
+
+      let stat = result.ok ? 'successful' : 'unsuccessful';
+      if (!result.ok)
+      {
+        alert('ERROR Creating key!');
+      }
+      window.location = '/market';
+    }
+
+    
+   window.start=start;
+   start();
+    
+  </script>
+
+ <H1>Attempting FIDO2 Registration</H1>
+</body>
+</html>

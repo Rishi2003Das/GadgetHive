@@ -40,6 +40,9 @@
                     <a class="nav-link">Welcome, {{ current_user.username }}</a>
                 </li>
                 <li class="nav-item">
+                    <a href="/fido_reg" class="nav-link">Create passkey 🔐</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>
                 </li>
             </ul>

@@ -1,9 +1,11 @@
 from market import app
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, session, jsonify
+from flask_sqlalchemy import SQLAlchemy
 from market.models import Item, User
 from market.forms import RegisterForm, LoginForm, PurchaseItemForm, SellItemForm
 from market import db
 from flask_login import login_user, logout_user, login_required, current_user
+from market.passwordless import reg_begin, reg_complete, auth_begin, auth_complete
 
 @app.route('/')
 @app.route('/home')
@@ -49,17 +51,54 @@ def register_page():
     if form.validate_on_submit():
         user_to_create = User(username=form.username.data,
                               email_address=form.email_address.data,
-                              password=form.password1.data)
+                              password=form.password1.data,
+                              public_key='')
         db.session.add(user_to_create)
         db.session.commit()
         login_user(user_to_create)
         flash(f"Account created successfully! You are now logged in as {user_to_create.username}", category='success')
-        return redirect(url_for('market_page'))
+        return redirect(url_for('fido_reg'))
     if form.errors != {}: #If there are not errors from the validations
         for err_msg in form.errors.values():
             flash(f'There was an error with creating a user: {err_msg}', category='danger')
 
     return render_template('register.html', form=form)
+
+@app.route('/fido_reg')
+@login_required
+def fido_reg():
+    return render_template('register_fido.html')
+
+@app.route('/api/register/begin', methods=['POST'])
+@login_required
+def passwordless_reg_begin():
+    username=current_user.username
+    options, state=reg_begin(username)
+    session['state']=state
+    return jsonify(options)
+
+@app.route('/api/register/complete', methods=['POST'])
+@login_required
+def passwordless_reg_complete():
+    username=current_user.username
+    respjson=request.json
+    state=session['state']
+    reg_complete(username,respjson,state)
+    return jsonify({'result':'success'})
+
+@app.route('/api/authenticate/begin', methods=['POST'])
+def passwordless_auth_begin():
+    options, state=auth_begin()
+    session['state']=state
+    return jsonify(options)
+
+@app.route('/api/authenticate/complete', methods=['POST'])
+def passwordless_auth_complete():
+    state=session.pop('state')
+    respjson=request.json
+    user=auth_complete(respjson, state)
+    login_user(user)
+    return redirect(url_for('market_page'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
