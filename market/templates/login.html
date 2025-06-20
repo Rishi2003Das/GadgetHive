@@ -4,6 +4,42 @@
 {% endblock %}
 
 {% block content %}
+
+  <script type="module">
+    import {
+        get,
+        parseRequestOptionsFromJSON,
+    } from '/webauthn-json.browser-ponyfill.js';
+
+    async function start() {
+      let request = await fetch('/api/authenticate/begin', {
+        method: 'POST',
+      });
+      if(!request.ok) {
+        throw new Error('No credential available to authenticate!');
+      }
+      let json = await request.json();
+      let options = parseRequestOptionsFromJSON(json);
+
+      let response = await get(options);
+      let result = await fetch('/api/authenticate/complete', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+	body: JSON.stringify(response),
+      });
+
+      let stat = result.ok ? 'successful' : 'unsuccessful';
+      if(result.ok)
+      {
+        window.location='/market';
+      }
+      
+    }
+
+    window.start = start;
+    start();
+  </script>
+
 <body class="text-center">
     <div class="container">
         <form method="POST" class="form-signin" style="color:white">
@@ -30,5 +66,6 @@
 
         </form>
     </div>
+
 </body>
 {% endblock %}
