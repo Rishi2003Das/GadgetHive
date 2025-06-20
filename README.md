@@ -53,15 +53,31 @@ FlaskMarket/
 ├── run.py
 └── README.md
 
-## Getting Started
+## 🎯 Goal: Learn and implement backend architecture from first principles.
+**🛠️ What I built:**
 
-- Clone the repo:
-  <pre>git clone https://github.com/your-username/GadgetHive.git
-  cd GadgetHive </pre>
-- Set up a virtual environment (optional but recommended):
-  <pre>python -m venv venv
-    source venv/bin/activate   # On Windows: venv\Scripts\activate</pre>
-- Install dependencies:
-  <pre> pip install -r requirements.txt</pre>
--  Run the application:
-    <pre>python run.py</pre>
+✅ Secure User Registration/Login System with encrypted passwords via Flask-Bcrypt
+
+✅ Authentication & session management with built-in data checks
+
+✅ A real-time marketplace: users can list, buy, and remove items
+
+✅ Backend-controlled purchase system with transaction logic
+
+✅ SQLite3 Database integrated using SQLAlchemy ORM
+
+✅ Responsive frontend using Bootstrap 4 (UI kept minimal for backend focus)
+
+**🔍 What I Learned:**
+
+Building and managing a relational database schema
+
+Creating secure authentication flows
+
+Structuring backend routes with Flask Blueprints
+
+Handling user input validation, flash messages, and data queries efficiently
+
+Orchestrating backend logic with a smooth, functional frontend
+
+**💡 All components** — from encryption to marketplace logic — work in sync to create a secure and intuitive platform. Every function you see is coded and connected by me, making this a complete backend-led full-stack build.
