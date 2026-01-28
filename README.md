@@ -53,6 +53,9 @@ FlaskMarket/
 ├── run.py
 └── README.md
 
+## Deployed link :
+GadgetHive[https://gadgethive.onrender.com]
+
 ## 🎯 Goal: Learn and implement backend architecture from first principles.
 **🛠️ What I built:**
 
